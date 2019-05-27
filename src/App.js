@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React , {Component} from 'react' ;
+import CardList from './CardList' ;
+import { Friends } from './Friends' ;
+import Searchbox from './Searchbox' ; 
+class App extends Component {
+        constructor(){
+                        super()
+                        this.state = {
+                        Friends: Friends ,
+                        searchfield : '' 
+                                    }
+                    }
+        Searchchange = (event) => {
+                        this.setState({searchfield : event.target.value })
+                     }
+                     
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+                    
+         render () {
+            const filteredfriend = this.state.Friends.filter(friend =>{
+                return (
+                    friend.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+                    );
+                })
+             return(
+                    <div>
+                        <div className='tc courier black '>
+                            <h1>My Friends List</h1>
+                            <Searchbox searchChange={this.Searchchange} />
+                        </div>
+                        <CardList Friends={filteredfriend}/>
+                        </div>
+                 );
+        }
 }
-
 export default App;
